@@ -83,7 +83,8 @@ public class PacienteDaoH2 implements IDao <Paciente> {
 
         try{
             connection = H2Connection.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM PACIENTES WHERE ID = ?", id);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM PACIENTES WHERE ID = ?");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 paciente = crearObjetoPaciente(rs);

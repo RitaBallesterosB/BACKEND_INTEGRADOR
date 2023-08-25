@@ -17,6 +17,7 @@ public class PacienteModificacionEntradaDto {
     @NotNull
     private String apellido;
 
+    //se cambia String por int
     @NotNull
     private String dni;
 
