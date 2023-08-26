@@ -3,6 +3,7 @@ package com.backend.proyclinicaodontologica.service.impl;
 
 
 import com.backend.proyclinicaodontologica.dao.IDao;
+import com.backend.proyclinicaodontologica.dto.entrada.modificacion.OdontologoModificacionEntradaDto;
 import com.backend.proyclinicaodontologica.dto.entrada.odontologo.OdontologoEntradaDto;
 import com.backend.proyclinicaodontologica.dto.salida.odontologo.OdontologoSalidaDto;
 import com.backend.proyclinicaodontologica.entity.Odontologo;
@@ -38,7 +39,32 @@ public class OdontologoService implements IOdontologoService {
     public void eliminarOdontologo(int id) {
         odontologoIDao.eliminar(id);
     }
+
+    @Override
+    public OdontologoSalidaDto modificarOdontologo(OdontologoModificacionEntradaDto odontologoModificado) {
+        OdontologoSalidaDto odontologoSalidaDto = null;
+        Odontologo odontologoAModificar = odontologoIDao.buscarPorId(odontologoModificado.getId());
+
+        if (odontologoAModificar != null) {
+            odontologoAModificar = dtoModificadoAEntidad(odontologoModificado);
+            odontologoSalidaDto = entidadADtoSalida(odontologoIDao.modificar(odontologoAModificar));
+        }
+            return odontologoSalidaDto;
+        }
+    public Odontologo dtoEntradaAEntidad(OdontologoEntradaDto odontologoEntradaDto) {
+
+        return modelMapper.map(odontologoEntradaDto, Odontologo.class);
+    }
+
+    public OdontologoSalidaDto entidadADtoSalida(Odontologo odontologo) {
+        return modelMapper.map(odontologo, OdontologoSalidaDto.class);
+    }
+
+    public Odontologo dtoModificadoAEntidad(OdontologoModificacionEntradaDto odontologEntradaDto) {
+        return modelMapper.map(odontologEntradaDto, Odontologo.class);
+    }
+
+
+
 }
-
-
 
